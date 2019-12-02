@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <script src="lib/vue.js"></script>
+    </head>
+    <body>
+        <div id="app">
+            <button v-on:click="toggle">切换</button>
+            <!--  v-if 是 vue提供的一个指令, 用来 判断是否输出 dom 元素 -->
+            <div v-if="show">
+                hello 世界
+            </div>
+            <hr/>
+            <!-- 插值表达式, 用来显示 数据模型 -->
+            分数: {{ score }} <br/>
+            
+            <div v-if="score < 30" style="color: #f90">
+                成绩这么差, 还不努力学习
+            </div>
+            <div v-else-if="score < 60" style="color: green">
+                <!-- v-else-if  否则如果 -->
+                有所提高, 继续
+            </div>
+            <div v-else-if="score < 90" style="color: pink">
+                继续保持, 争取第一
+            </div>
+            <div v-else style="color: red">
+                不要骄傲 
+            </div>
+            
+            <button v-on:click="hardStudy">努力学习</button>
+        </div>
+
+        <script>
+            new Vue({
+                el: '#app',
+                data: {
+                    show: false,
+                    score: 0
+                },
+                methods: {
+                    toggle() {
+                        //this.show = true;
+                        this.show = !this.show;
+                    },
+                    hardStudy() {
+                        this.score = this.score + 5;
+                    }
+                }
+            })
+        </script>
+    </body>
+</html>

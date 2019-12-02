@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <script src="lib/vue.js"></script>
+    </head>
+    <body>
+        <div id="app">
+            
+            <div style="border: solid 5px red; color: green; font-size: 30px;">
+                box1
+            </div>
+            <hr/>
+            <button v-on:click="moreLarge">变大</button>
+            <!-- v-bind   用来绑定htm 元素的 属性 v-bind:style 绑定 样式 -->
+            <div v-bind:style="boxStyle">
+                box2
+            </div>
+            <hr/>
+
+            <div v-on:click="changeColor" v-bind:style="box3Style">
+                box3
+            </div>
+        </div>
+
+        <script>
+            new Vue({
+                el: '#app',
+                data: {
+                    boxStyle: {
+                        border: 'solid 5px blue', 
+                        color: 'purple', 
+                        fontSize: '40px'
+                    },
+                    box3Style: {
+                        border: 'solid 5px orange',
+                        width: '100px',
+                        height: '100px',
+                        backgroundColor: 'rgba(255, 0, 0, 1)'
+                    }
+                },
+                methods: {
+                    moreLarge() {
+                        this.boxStyle.fontSize = '60px';
+                    },
+                    changeColor() {
+                        let red = Math.floor(Math.random() * 256);
+                        let green = Math.floor(Math.random() * 256);
+                        let blue = Math.floor(Math.random() * 256);
+
+                        this.box3Style.backgroundColor = `rgba(${red}, ${green}, ${blue}, 1)`;
+                    }
+                }
+            })
+        </script>
+    </body>
+</html>

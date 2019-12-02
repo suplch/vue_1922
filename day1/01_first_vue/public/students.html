@@ -20,9 +20,20 @@
                     <!-- v-for 是 vue 提供的一个指令, 用来循环遍历 一个 数组 -->
                     <tr v-for="student in student_list">
                         <td>{{ student.name }}</td>
-                        <td>{{ student.sex }} </td>
+                        <td>
+                            <span v-if="student.sex === '男'">👱</span>
+                            <span v-else-if="student.sex === '女'">👩</span>
+                            <span v-else>？</span>
+                            
+                        </td>
                         <td>{{ student.age }}</td>
-                        <td>{{ student.score }}</td>
+                        <td>
+                            <span v-if="student.score < 60" style="color: orange">{{ student.score }}</span>
+                            <span v-else-if="student.score < 100" style="color: green">{{ student.score }}</span>
+                            <span v-else style="color: red">{{student.score}}</span>
+                            
+                        
+                        </td>
                         <td>
                             <!-- v-on 是 vue 提供 的一个监听事件的指令 :click 表示监听 点击事件 -->
                             <button v-on:click="deleteStudent(student)">删除</button>
@@ -57,7 +68,7 @@
                     student_list: [
                         {name: '张三', age: 18, sex: '男', score: 100},
                         {name: '李四', age: 28, sex: '女', score: 90},
-                        {name: '王五', age: 20, sex: '男', score: 70},
+                        {name: '王五', age: 20, sex: '男', score: 55},
                         {name: '赵六', age: 22, sex: '女', score: 80},
                     ]
                 },
