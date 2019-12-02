@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <script src="lib/vue.js"></script>
+    </head>
+    <body>
+        <div id="app">
+            <input ref="taskEl" /> <button v-on:click="addTask">添加任务</button>
+            <ul>
+                <li v-bind:style="{color: todo.done ? 'lightgrey' : 'black'}" v-for="todo in todos">
+                    <!-- v-model 是一个双向绑定数据模型的指令 -->
+                    {{ todo.task }} <input type="checkbox" v-model="todo.done" />
+                </li>
+            </ul>
+            明天要做 {{ todos.length }} 件事, 
+            已经做 {{ doneCount }} 件事,
+            还剩 {{ todos.length - doneCount }} 件事没有做
+        </div>
+
+        <script>
+            new Vue({
+                el: '#app',
+                data: {  // 数据模型
+                    todos: [
+                        {task: '起床', done: true},
+                        {task: '洗脸', done: false},
+                        {task: '刷牙', done: false},
+                        {task: '吃早饭', done: false},
+                        {task: '背面试题', done: false},
+                    ]
+                },
+                methods: {
+                    addTask() {
+                        let task = this.$refs.taskEl.value
+                        alert('add');
+
+                        this.todos.push({
+                            task: task,
+                            done: false
+                        })
+
+                    }
+                },
+                computed: { // 计算属性
+                    doneCount() {
+                        let count = 0
+                        for (let todo of this.todos) {
+                            if (todo.done) {
+                                count++;
+                            }
+                        }
+                        return count;
+                    }
+                }
+            })
+        </script>
+    </body>
+</html>
