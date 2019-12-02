@@ -76,9 +76,9 @@
                         // 获取表单 元素的值
                         let student = {
                             name: this.$refs.stu_name.value,
-                            age: Number(this.$refs.stu_age.value),
+                            age: Number(this.$refs.stu_age.value), // age是数值类型, 需要转换为数字
                             sex: this.$refs.stu_sex.value,
-                            score: Number(this.$refs.stu_score.value)
+                            score: Number(this.$refs.stu_score.value) //age是数值类型, 需要转换为数字
                         }
                         console.log(student);
                         // 添加一个 学生 到 student_list 中, 界面将自动被重新 渲染刷新
