@@ -64,11 +64,11 @@
                 methods: { // methods 用来声明一些 方法, 供 vue 调用
                     deleteStudent(student) {
                         alert('hi ' + student.name)
-                        
+                        // 返回 student 在数组中的 位置
                         let index = this.student_list.indexOf(student);
                         alert(index);
+                        // 删除 此位置的一个元素, 即 删除 student 对象
                         this.student_list.splice(index, 1)
-
                     },
                     addStudent() {
                         // this.$refs vue 提供的一种快速的获取 dom 元素 的机制
