@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <script src="./lib/vue.js"></script>
+    </head>
+    <body>
+        学生管理
+        <div id="app">
+            <table border="1">
+                <thead>
+                    <tr>
+                        <th>姓名</th>
+                        <th>性别</th>
+                        <th>年龄</th>
+                        <th>分数</th>
+                        <th>操作</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- v-for 是 vue 提供的一个指令, 用来循环遍历 一个 数组 -->
+                    <tr v-for="student in student_list">
+                        <td>{{ student.name }}</td>
+                        <td>{{ student.sex }} </td>
+                        <td>{{ student.age }}</td>
+                        <td>{{ student.score }}</td>
+                        <td>
+                            <!-- v-on 是 vue 提供 的一个监听事件的指令 :click 表示监听 点击事件 -->
+                            <button v-on:click="deleteStudent(student)">删除</button>
+                        </td>
+                    </tr>
+                </tbody>
+                <tfoot>
+                        <tr>
+                            <td colspan="2">合计:</td>
+                            <td>{{ totalAge }}</td>
+                            <td>{{ totalScore }}</td>
+                        </tr>
+                    </tfoot>
+            </table>
+            <div>
+                <!-- ref 是 vue 提供的一个 快捷的获取 元素对象的方式 -->
+                姓名: <input ref="stu_name" /><br/>
+                年龄: <input ref="stu_age" /><br/>
+                性别: <input ref="stu_sex" /><br/>
+                分数: <input ref="stu_score" /><br/>
+                <!-- v-on 是 vue 提供 的一个监听事件的指令 :click 表示监听 点击事件 -->
+                <button v-on:click="addStudent">添加</button>
+            </div>
+        </div>
+
+        <script>
+            // Vue 构造函数
+            new Vue({
+                el: '#app', // 告诉 vue id 为 app 的div 被 vue 接管
+                data: {   // data 代表 数据模型
+                    // student_list 是数据模型对象上的属性
+                    student_list: [
+                        {name: '张三', age: 18, sex: '男', score: 100},
+                        {name: '李四', age: 28, sex: '女', score: 90},
+                        {name: '王五', age: 20, sex: '男', score: 70},
+                        {name: '赵六', age: 22, sex: '女', score: 80},
+                    ]
+                },
+                methods: { // methods 用来声明一些 方法, 供 vue 调用
+                    deleteStudent(student) {
+                        alert('hi ' + student.name)
+                        
+                        let index = this.student_list.indexOf(student);
+                        alert(index);
+                        this.student_list.splice(index, 1)
+
+                    },
+                    addStudent() {
+                        // this.$refs vue 提供的一种快速的获取 dom 元素 的机制
+                        console.log(this.$refs.stu_name.value)
+                        // 获取表单 元素的值
+                        let student = {
+                            name: this.$refs.stu_name.value,
+                            age: Number(this.$refs.stu_age.value),
+                            sex: this.$refs.stu_sex.value,
+                            score: Number(this.$refs.stu_score.value)
+                        }
+                        console.log(student);
+                        // 添加一个 学生 到 student_list 中, 界面将自动被重新 渲染刷新
+                        this.student_list.push(student);
+
+                        // 添加完毕 清除表单 数据
+                        this.$refs.stu_name.value = '';
+                        this.$refs.stu_age.value = '';
+                        this.$refs.stu_sex.value = '';
+                        this.$refs.stu_score.value = '';
+                        
+                        alert('add haha');
+                    }
+                },
+                // computed 用来定义 一下 "计算属性" , 
+                // 当计算属性 依赖的数据发生变化,那么重新计算
+                computed: { 
+                    totalAge() { // totalAge 计算 属性依赖于 student_list
+                        // this 表示 当前 vue 实例
+                        let total = 0; // 循环 访问 student_list 数组, 统计 总年龄
+                        for (let student of this.student_list) {
+                            total = total + student.age;
+                        }
+                        return total;
+                    },
+                    totalScore: function() {
+                        let total = 0;
+                        for (let student of this.student_list) {
+                            total = total + student.score;
+                        }
+                        return total;
+                    }
+                }
+            })
+        </script>
+    </body>
+</html>
