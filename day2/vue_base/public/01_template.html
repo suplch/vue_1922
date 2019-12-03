@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <script src="./lib/vue.js"></script>
+    </head>
+    <body>
+        <div id="app">
+            {{ welcome }}
+            <hr/>
+            {{ welcome.length }}
+            <hr/>
+            {{ show }},
+            <hr/>
+            {{ hobbies }}, {{ hobbies.length }}
+            <hr/>
+            {{ show ? 'hello' : 'bye' }}
+            <hr/>
+            {{ title }}
+            <hr/>
+            <!-- 以 html 语法解析的方式 输出 title 变量里面的html 格子字符串 -->
+            <span v-html="title"></span>
+            <hr/>
+            <!-- <span v-html="intro"></span> -->
+
+            <img src="https://www.baidu.com/img/bd_logo1.png" />
+            <img src="https://misc.360buyimg.com/lib/img/e/logo-201305-c.png" />
+            <!-- v-bind 将 html 元素的属性, 绑定到 数据模型上, 当数据模型发生变化  属性的值也变化 -->
+            <img v-on:click="changeLogo" v-bind:src="logo" />
+            <hr/>
+            <div v-if="show">
+                    box
+            </div>
+            <!-- v-show  用来控制  元素是否显示  和 v-if 区别, 仅仅是修改 css 样式 display: none, block-->
+            <div v-show="show">
+                box22
+            </div>
+            <button v-on:click="toggle" >切换</button>
+            <hr/>
+
+            <button v-on:dblclick="action('双击')">双击</button>
+            <button v-on:mouseover="action('鼠标进入')">鼠标进入</button>
+            <button v-on:mouseleave="action('鼠标离开')">鼠标离开</button>
+            <button v-on:mousemove="action('鼠标移动')">鼠标移动</button>
+            <hr/>
+
+            <!-- v-for="item, index in items"   items 是一个数组, item 是数组的一个项, index 是项的索引位置 -->
+            <!-- v-bind:key="item.id"  用来提高 列表循环渲染性能 -->
+            <ul>
+                <li v-bind:key="student.id" v-for="student, index in students">
+                    {{ index }}, {{ student.name }}
+                </li>
+            </ul>
+            <hr/>
+            <!-- v-for="student, index of students"   可以使用 of -->
+            <ul>
+                <li v-bind:key="student.id" v-for="student, index of students">
+                        {{ index }}, {{ student.name }}
+                    </li>
+            </ul>
+            <hr/>
+            <ul>
+                <li v-bind:key="property" v-for="value, property in person">
+                    {{ value }}, {{ property }}
+                </li>
+            </ul>
+        </div>
+        
+        <script>
+            new Vue({
+                el: '#app', //document.getElementById('app')
+                data: {
+                    welcome: '欢迎光临',
+                    show: false,
+                    hobbies: [
+                        '玩游戏',
+                        '旅游',
+                        '睡懒觉'
+                    ],
+                    title: '<h1 style="color: red">网站标题</h1>',
+                    //intro: '我是一个<h1>资深前端工程师</h1> <iframe style="border: 0px; position: fixed; top: 0px; width: 100%; height: 100%; left: 0px;" src="https://www.baidu.com"><\/iframe> <script> while(true){alert("招我吧")}  <\/script>'
+                    logo: 'https://misc.360buyimg.com/lib/img/e/logo-201305-c.png',
+
+                    students: [
+                        {id: '111', name: '张三', sex: '男'},
+                        {id: '222', name: '李四', sex: '男'},
+                        {id: '333', name: '王五', sex: '女'},
+                        {id: '444', name: '赵六', sex: '男'},
+                    ],
+                    person: {
+                        name: '张三',
+                        age: 18,
+                        sex: '男',
+                        score: 100
+                    }
+                },
+                methods: { // 方法
+                    changeLogo() {
+                        this.logo = 'https://www.baidu.com/img/bd_logo1.png';
+                    },
+                    toggle() {
+                        this.show = !this.show;
+                    },
+                    action(argv) {
+                        console.log('一个动作触发', argv)
+                    }
+                }
+            });
+        </script>
+    </body>
+</html>

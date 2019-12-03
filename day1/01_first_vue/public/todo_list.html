@@ -6,7 +6,7 @@
     <body>
         <div id="app">
             <input ref="taskEl" /> <button v-on:click="addTask">添加任务</button>
-            <ul>            <!-- v-bind:style 绑定内联 css 样式 当任务做了 颜色为 淡灰色 否则为 黑色 -->
+            <ul>       <!-- v-bind:style 绑定内联 css 样式 当任务做了 颜色为 淡灰色 否则为 黑色 -->
                 <li v-bind:style="{color: todo.done ? 'lightgrey' : 'black'}" v-for="todo in todos">
                     <!-- v-model 是一个双向绑定数据模型的指令 -->
                     {{ todo.task }} <input type="checkbox" v-model="todo.done" />
