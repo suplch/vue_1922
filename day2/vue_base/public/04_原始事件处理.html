@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <script>
+            
+            function showMessage() {
+                alert('message')
+            }
+
+
+
+        </script>
+    </head>
+    <body>
+        <button onclick="showMessage()">显示消息 1</button>
+        <button id="btn2">显示消息 2</button>
+
+        <button id="btn3">显示消息 3</button>
+
+        <script>
+            let btn2 = document.getElementById('btn2');
+
+            btn2.onclick = function() {
+                alert('message 2');
+            }
+            btn2.onclick = function() {
+
+            }
+
+            let btn3 = document.getElementById('btn3');
+            btn3.addEventListener('click', function() {
+                alert('message 3');
+            });
+
+            let clk = function() {
+                alert('MESSAGE 3');
+                btn3.removeEventListener('click', clk)
+            }
+
+            btn3.addEventListener('click', clk)
+
+            
+        </script>
+    </body>
+</html>

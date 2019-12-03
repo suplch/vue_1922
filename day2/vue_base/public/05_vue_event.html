@@ -1,0 +1,60 @@
+
+<!DOCTYPE html>
+<html>
+    <head>
+        <script src="./lib/vue.js"></script>
+        
+    </head>
+    <body onclick="alert('body 被点击了')">
+        尽快发撒的房间里
+        <div id="app" onclick="alert('App div 被点击了')">
+            <button v-on:click.stop="action">直接写方法名</button>
+            <button v-on:click="action($event)">直接写方法调用表达式</button>
+            <button v-on:click="show = !show">直接写代码</button>
+            
+            <a v-on:click.prevent="clickLink" href="https://www.baidu.com">百度</a>
+
+            <div v-if="show" style="border: solid 5px red">
+                box
+            </div>
+            <hr/>
+            <div ref="box" @click.self="clickBox" style="border: solid 5px red;">
+                <button>点击我</button>
+            </div>
+
+            <input v-on:keyup="submit">
+        </div>
+        
+        <script>
+            new Vue({
+                el: '#app', //document.getElementById('app')
+                data: {
+                    show: true,
+                    
+                },
+                methods: { // 方法
+                    action(event) {
+                        console.log(event);
+                        // 停止事件冒泡
+                        //event.stopPropagation();
+                        this.show = !this.show;
+                    },
+                    clickLink(event) {
+                        // 阻止默认行为
+                        //event.preventDefault();
+                    },
+                    clickBox(event) {
+                        console.log(event.target);
+                        i//f (event.target === this.$refs.box) {
+                            alert('框被点击了');
+                        //}
+                        
+                    },
+                    submit() {
+                        console.log('键盘弹起')
+                    }
+                }
+            });
+        </script>
+    </body>
+</html>
