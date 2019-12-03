@@ -25,7 +25,7 @@
             <img src="https://www.baidu.com/img/bd_logo1.png" />
             <img src="https://misc.360buyimg.com/lib/img/e/logo-201305-c.png" />
             <!-- v-bind 将 html 元素的属性, 绑定到 数据模型上, 当数据模型发生变化  属性的值也变化 -->
-            <img v-on:click="changeLogo" v-bind:src="logo" />
+            <img v-on:click="changeLogo" :src="logo" />
             <hr/>
             <div v-if="show">
                     box
@@ -38,9 +38,9 @@
             <hr/>
 
             <button v-on:dblclick="action('双击')">双击</button>
-            <button v-on:mouseover="action('鼠标进入')">鼠标进入</button>
-            <button v-on:mouseleave="action('鼠标离开')">鼠标离开</button>
-            <button v-on:mousemove="action('鼠标移动')">鼠标移动</button>
+            <button @mouseover="action('鼠标进入')">鼠标进入</button>
+            <button @mouseleave="action('鼠标离开')">鼠标离开</button>
+            <button @mousemove="action('鼠标移动')">鼠标移动</button>
             <hr/>
 
             <!-- v-for="item, index in items"   items 是一个数组, item 是数组的一个项, index 是项的索引位置 -->

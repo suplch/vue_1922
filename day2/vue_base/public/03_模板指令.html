@@ -1,0 +1,96 @@
+
+<!DOCTYPE html>
+<html>
+    <head>
+        <script src="./lib/vue.js"></script>
+        <style>
+            .box {
+                border: solid 5px red;
+                background: yellow;
+                width: 100px;
+                height: 100px;
+            }
+
+            .boxMargin {
+                margin: 20px;
+            }
+        </style>
+    </head>
+    <body>
+        <div id="app">
+            <ul>
+                <li>张三</li>
+                <!-- template 标签 是 vue提供的一个 虚构的元素, 他本身是不存在的 -->
+                <!-- 当 template 里面的内容要输出的时候, template 本身 不输出 -->
+                <template v-if="show">
+                    <li>李四</li>
+                    <li>王五</li>
+                </template>
+                
+                <li>赵六</li>
+            </ul>
+
+            <table border="1">
+                <tbody>
+                    <tr>
+                        <td>张三</td>
+                        <template v-if="show">
+                            <td>李四</td>
+                            <td>王五</td>
+                        </template>
+                        <td>赵六</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <ul>
+                <li v-for="n in 10">
+                    {{ n }}
+                </li>
+            </ul>
+
+            <ul>
+                <li v-for="hobby of hobbies">
+                    {{ hobby }}
+                </li>
+            </ul>
+            <button @click="addHobby">添加爱好</button>
+            <button @click="filterHobby">过滤</button>
+            <button @click="editFirst">修改</button>
+        </div>
+        
+        <script>
+            new Vue({
+                el: '#app', //document.getElementById('app')
+                data: {
+                    show: true,
+                    hobbies: [
+                        '大游戏',
+                        '玩',
+                        '乐'
+                    ]
+                },
+                methods: { // 方法
+                    addHobby() {
+                        this.hobbies.push('学习');
+                    },
+                    filterHobby() {
+                        this.hobbies = this.hobbies.filter((hobby) => {
+                            return hobby.length === 1
+                        });
+                    },
+                    editFirst() {
+                        // 这个赋值 不会使得 界面渲染
+                        // this.hobbies[0] = '打游戏';
+                        // console.log(this.hobbies);
+
+                        // 使用这个方法来 修改 数组索引所对应的值
+                        //Vue.set(this.hobbies, 0, '打游戏');
+
+                        this.hobbies.splice(0, 1, '打游戏');
+                    }
+                }
+            });
+        </script>
+    </body>
+</html>

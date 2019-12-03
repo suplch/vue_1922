@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <script src="./lib/vue.js"></script>
+        <style>
+            .box {
+                border: solid 5px red;
+                background: yellow;
+                width: 100px;
+                height: 100px;
+            }
+
+            .boxMargin {
+                margin: 20px;
+            }
+        </style>
+    </head>
+    <body>
+        <div id="app">
+            
+            <div class="box boxMargin">
+                box1
+            </div>
+
+            <div v-bind:class="boxClass">
+                box2
+            </div>
+
+            <div v-bind:class="objBoxClass">
+                box3
+            </div>
+
+            <div v-on:click="changeCss" v-bind:class="{box: true, boxMargin: showMargin}">
+                box4
+            </div>
+
+            <div @click="changeMargin" :class="arrBoxClass">
+                box5
+            </div>
+            <hr/>
+
+            <div style="border: solid 5px red; background: yellow; width: 100px; height: 100px; margin: 20px">
+                box6 内联样式
+            </div>
+
+            <div @click="removeBoxMargin" :style="boxStyle">
+                box7 内联样式
+            </div>
+
+            <div @click="removeBoxMargin" :style="{border: 'solid 5px red', background: 'yellow'}">
+                box8 内联样式
+            </div>
+
+            <div @click="incBorder" :style="{border: border, background: 'yellow'}">
+                box9 内联样式
+            </div>
+
+            <div :style="[{border: 'solid 5px red'}, {background: 'green'}, {margin: '20px'}]">
+                box10
+            </div>
+
+        </div>
+        
+        <script>
+            new Vue({
+                el: '#app', //document.getElementById('app')
+                data: {
+                    boxClass: 'box boxMargin',
+                    objBoxClass: {
+                        box: true,
+                        boxMargin: false
+                    },
+                    arrBoxClass: [
+                        'box',
+                        'boxMargin'
+                    ],
+
+                    boxStyle: {
+                        border: 'solid 5px red',
+                        background: 'yellow',
+                        width: '100px',
+                        height: '100px',
+                        margin: '20px'
+                    },
+
+                    border: 'solid 5px red',
+
+                    showMargin: true
+                },
+                methods: { // 方法
+                    changeCss() {
+                        this.showMargin = !this.showMargin
+                    },
+                    changeMargin() {
+                        this.arrBoxClass.pop();
+                    },
+                    removeBoxMargin() {
+                        this.boxStyle.margin = '0px';
+                        this.boxStyle.background = 'blue';
+                    },
+                    incBorder() {
+                        this.border = 'dashed 10px green';
+                    }
+                }
+            });
+        </script>
+    </body>
+</html>
