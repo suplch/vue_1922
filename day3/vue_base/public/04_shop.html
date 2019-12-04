@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <script src="./lib/vue.js"></script>
+    </head>
+    <body>
+        <div id="app">
+            商店
+            <ul>
+                <li v-bind:key="goods.id" v-for="goods of goods_list">
+                    {{ goods.name }}, 单价: {{ goods.price }} 单位{{ goods.unit}}, 外观: {{goods.pic}}
+                    <button @click="addGodosToCart(goods)">放入购物车</button>
+                </li>
+            </ul>
+
+            购物车:
+            <ul>
+                <li v-for="item of cart">
+                        <input type="checkbox" v-model="buyItems"  v-bind:value="item" />
+                        {{ item.name }}, 单价: {{ item.price }} 单位{{ item.unit}}, 
+                        外观: {{item.pic}}, 
+                        数量: 
+                        <button v-on:click="decCount(item)">-</button>
+                        <input v-on:input="changeCount(item, $event)" v-bind:value="item.count" type="number" />
+                        <button @click="item.count++">+</button>
+                        小计: {{ item.price * item.count }}
+                </li>
+            </ul>
+            金额合计:  {{ total }} <button v-on:click="pay()" v-bind:disabled="buyItems.length === 0">付款</button>
+            <hr/>
+            购物车数据
+            {{ cart }}
+            <hr/>
+            最终要买的数据
+            {{ buyItems }}
+        </div>
+
+        <script>
+            new Vue({
+                el: '#app',
+                data: {
+                    goods_list: [
+                        {id: '111', name: '西瓜', price: 10, unit: '斤', pic: '🍉'},
+                        {id: '222', name: '葡萄', price: 10, unit: '斤', pic: '🍇'},
+                        {id: '333', name: '橙子', price: 10, unit: '斤', pic: '🍊'},
+                        {id: '444', name: '哈密瓜', price: 10, unit: '斤', pic: '🍈'},
+                        {id: '555', name: '香蕉', price: 10, unit: '斤', pic: '🍌'},
+                    ],
+
+                    cart: [
+                        {id: '111', name: '西瓜', price: 10, unit: '斤', pic: '🍉', count: 2},
+                        {id: '222', name: '葡萄', price: 10, unit: '斤', pic: '🍇', count: 1},
+                        {id: '333', name: '橙子', price: 10, unit: '斤', pic: '🍊', count: 3},
+                    ],
+
+                    buyItems: []
+                },
+                methods: {
+                    addGodosToCart(goods) {
+                        // 数组对象 有一个 方法 叫 find  给他 传递一个 回调函数, 我们来决定要不要
+                        // 如果 回调函数 返回 true  代表 找到了, 返回 对应 变量,
+                        // 如果 最终没有 返回 true 的项, 最终返回一个 undefined 代表没有找到
+                        let item = this.cart.find((item) => {
+                            return goods.id === item.id
+                        });
+                        // 判断 item 是否有效
+                        if (item) {
+                            item.count++;
+                        } else {
+                            this.cart.push({
+                                ...goods,
+                                count: 1
+                            });
+                        }
+                    },
+                    decCount(item){
+                        if (item.count > 1) {
+                            item.count--
+                        }
+                    },
+                    changeCount(item, event){
+                        let value = event.target.value;
+                        // try js 的一个语法关键字, 试图去执行 后面的代码块 {} 如果里面发生了错误
+                        // 那么 将被 catch 关键字所捕获, 我们 catch(err) {} 处理错误
+                        try {
+                            let count = parseInt(value);
+                            if (Number.isNaN(count)) {
+                                count = 1;
+                            }
+                            if (count === 0) {
+                                count = 1;
+                            }
+                            item.count = Math.abs(count);
+                            event.target.value = item.count;
+                        } catch (err) {
+                            // 补救操作
+                            console.log(err);
+                            item.count = 1;
+                        }
+                    },
+                    pay() {
+                        console.log(this.buyItems);
+                    }
+                },
+                computed: {
+                    total() {
+                        let sum = 0;
+                        for (let item of this.buyItems) {
+                            sum = sum + (item.price * item.count);
+                        }
+                        return sum;
+                    }
+                }
+            })
+        </script>
+    </body>
+</html>

@@ -11,10 +11,10 @@
     
             <div style="display: inline-block; text-align: center; width: 100px; height: 100px;border: 1px red solid">
                 <button @click="moveRight">右移</button><br/>
-                <button>左移</button>
+                <button @click="moveLeft">左移</button>
             </div>
 
-            <select multiple style="width: 300px; height: 400px;">
+            <select v-model="right_selectedGames" multiple style="width: 300px; height: 400px;">
                     <option v-for="game of right_games" v-bind:value="game">{{ game.name }}</option>
             </select>
             <hr/>
@@ -25,6 +25,7 @@
             new Vue({
                 el: '#app',
                 data: {
+                    // 左边所有的游戏列表
                     games: [
                         {name: '连连看', company: '腾讯'},
                         {name: '开心消消乐', company: '百度'},
@@ -34,24 +35,37 @@
                         {name: '魂斗罗', company: '虾米'},
                         {name: '冒险岛', company: '甲骨文'},
                     ],
+                    // 左边选中的游戏列表
                     selectedGames: [],
-
+                    // 右侧 的游戏列表
                     right_games: [],
+                    // 右侧选中的游戏列表
                     right_selectedGames: []
                 },
                 methods: {
                     moveRight() {
+                        // 循环 左侧 所有的被选择的游戏
                         for (let game of this.selectedGames) {
                             let position = this.games.indexOf(game);
+                            // 检查 被选择的游戏 将其从 右侧游戏列表删除
                             if (position !== -1) {
                                 this.games.splice(position, 1);
                             }
+                            // 将被选择的 放到 右侧游戏列表
                             this.right_games.push(game);
                         }
+                        // 将选中的游戏 清空
                         this.selectedGames = [];
                     },
                     moveLeft() {
-                        
+                        for (let game of this.right_selectedGames) {
+                            let position = this.right_games.indexOf(game);
+                            if (position !== -1) {
+                                this.right_games.splice(position, 1);
+                            }
+                            this.games.push(game);
+                        }
+                        this.right_selectedGames = [];
                     }
                 }
             })

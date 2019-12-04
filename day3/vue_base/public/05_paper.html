@@ -1,0 +1,63 @@
+<html>
+    <script>
+    
+    let paper = {
+        single: {
+            title: '单选题 () 5 分',
+            questions: [
+                {
+                    id: '111',
+                    ask: '1+1 等于几?',
+                    correct: '111_2',
+                    answer: [
+                        {id: '111_1', text: '5'},
+                        {id: '111_2', text: '2'},
+                        {id: '111_3', text: '1'},
+                        {id: '111_4', text: '3'},
+                    ]
+                },
+                {
+                    id: '222',
+                    ask: '1 / 2 等于几?',
+                    correct: '222_1',
+                    answer: [
+                        {id: '222_1', text: '0.5'},
+                        {id: '222_2', text: '0.3'},
+                        {id: '222_3', text: '1'},
+                        {id: '222_4', text: '2'},
+                    ]
+                }
+            ]
+        },
+        multiple: {
+            title: '多选题 每道题 5 分',
+            questions: [
+                {
+                    id: '333',
+                    ask: '下列哪些是浏览器前端技术',
+                    correct: ['111_3', '111_4'],
+                    answer: [
+                        {id: '111_1', text: 'PHP'},
+                        {id: '111_2', text: 'C++'},
+                        {id: '111_3', text: 'JavaScript'},
+                        {id: '111_4', text: 'HTML'},
+                    ]
+                },
+                {
+                    id: '444',
+                    ask: '下列哪些是 sql 数据库',
+                    correct: ['222_1', '222_2'],
+                    answer: [
+                        {id: '222_1', text: 'mysql'},
+                        {id: '222_2', text: 'oracle'},
+                        {id: '222_3', text: 'mongodb'},
+                        {id: '222_4', text: 'redis'},
+                    ]
+                }
+            ]
+        }
+    }
+    
+    
+    </script>
+</html>
