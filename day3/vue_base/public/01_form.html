@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <script src="./lib/vue.js"></script>
+    </head>
+    <body>
+        <div id="app">
+            {{ welcome }}
+            <hr/>
+            <!-- v-model 是一个语法糖  处理双向绑定 -->
+            <input v-model="welcome" type="text" />
+            <!-- v-on:input   v-bind:value   联合起来可以实现 双向绑定 -->
+            <input type="text" v-on:input="changeWelcome" v-bind:value="welcome" />
+            <hr/>
+            最喜欢的语言:
+            <input type="checkbox" v-model="likeJava" /> Java
+            <input type="checkbox" v-model="likePhp" /> Php
+            <input type="checkbox" v-model="likeJavascript" /> JavaScript
+            <br/>
+            {{ likeJava }}, {{ likePhp}}, {{ likeJavascript}}
+            
+            <hr/>
+            <!-- 更好的 checkbox 数据绑定方式 版本1-->
+            最喜欢的语言:
+            <span v-for="lang in favoriteLanguage">
+                <label>
+                    {{lang.name}} <input type="checkbox" v-model="bestLike" v-bind:value="lang.name" />
+                </label>
+            </span>
+            <br/>
+            {{  bestLike }} <button v-on:click="summit">提交</button>
+
+            <hr/>
+            <!-- 更好的 checkbox 数据绑定方式 版本2-->
+            最喜欢的语言:
+            <span v-for="lang in favoriteLanguage">
+                <label>
+                    {{lang.name}} <input type="checkbox" v-model="bestLikeObj" v-bind:value="lang" />
+                </label>
+            </span>
+            <br/>
+            {{  bestLikeObj }} <button v-on:click="summit">提交</button>
+            <hr/>
+            <!-- 单选处理-->
+            <label><input name="fruit" type="radio" value="哈密瓜"> 🍈</label>
+            <label><input name="fruit" type="radio" value="香蕉"> 🍌</label>
+            <label><input name="fruit" type="radio" value="橙子"> 🍊</label>
+            <label><input name="fruit" type="radio" value="菠萝"> 🍍</label>
+            <hr/>
+            <!-- 单选处理 vue 来控制 版本1 -->
+            <label v-for="fruit in fruits">
+                <input name="fruit" type="radio" v-model="bestFruit" v-bind:value="fruit.name"> {{ fruit.pic }}
+            </label>
+            {{ bestFruit }}
+            <hr/>
+            <!-- 单选处理 vue 来控制 版本2 -->
+            <label v-for="fruit in fruits">
+                <input name="fruit" type="radio" v-model="bestFruitObj" v-bind:value="fruit"> {{ fruit.pic }}
+            </label>
+            {{ bestFruitObj }}
+            <hr/>
+            <!-- vue 模型绑定 来控制 select 版本1-->
+            最喜欢的水果
+            <select v-model="bestF">
+                <option v-for="fruit in fruitList"  :value="fruit.name"> {{ fruit.pic }} </option>
+            </select>
+            {{ bestF }}
+
+            <hr/>
+            <!-- vue 模型绑定 来控制 select 版本2-->
+            最喜欢的水果
+            <select v-model="bestFObj">
+                <option v-for="fruit in fruitList"  :value="fruit"> {{ fruit.pic }} </option>
+            </select>
+            {{ bestFObj }}
+            <hr/>
+
+            <select v-model="favoriteGames" multiple>
+                <option v-for="game in games" v-bind:value="game">{{ game.name }}</option>
+            </select>
+            {{ favoriteGames }}
+        </div>
+
+        <script>
+            new Vue({
+                el: '#app',
+                data: {
+                    welcome: '欢迎',
+                    likeJava: false,
+                    likePhp: false,
+                    likeJavascript: true,
+
+                    favoriteLanguage: [
+                        {name: 'Java', birthday: 1995}, 
+                        {name: 'PHP', birthday: 1999}, 
+                        {name: 'JavaScript', birthday: 1996 }
+                    ],
+                    bestLike: [],
+                    bestLikeObj: [],
+                    fruits: [
+                        {name: '哈密瓜', pic: '🍈'},
+                        {name: '香蕉', pic: '🍌'},
+                        {name: '橙子', pic: '🍊'},
+                        {name: '菠萝', pic: '🍍'},
+                    ],
+                    bestFruit: '',
+                    bestFruitObj: undefined,
+
+                    fruitList: [
+                        {
+                            name: '西瓜', pic: '🍉'
+                        },{
+                            name: '葡萄', pic: '🍇'
+                        }, {
+                            name: '猕猴桃', pic: '🥝'
+                        }
+                    ],
+                    bestF: undefined,
+                    bestFObj: undefined,
+
+                    games: [
+                        {name: '王者荣耀', company: '腾讯'},
+                        {name: '英雄联盟', company: '拳头'},
+                        {name: '绝地求生', company: '蓝洞'},
+                    ],
+                    favoriteGames: []
+                },
+                methods: {
+                    changeWelcome(event) {
+                        let value = event.target.value;
+                        console.log(value);
+                        this.welcome = value;
+                    },
+                    summit() {
+                        console.log(this.bestLike);
+                    }
+                }
+            })
+        </script>
+    </body>
+</html>
