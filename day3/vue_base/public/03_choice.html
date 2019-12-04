@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <script src="./lib/vue.js"></script>
+    </head>
+    <body>
+        <div id="app">
+            <select v-model="selectedGames" multiple style="width: 300px; height: 400px">
+                <option v-for="game of games" v-bind:value="game">{{ game.name }}</option>
+            </select>
+    
+            <div style="display: inline-block; text-align: center; width: 100px; height: 100px;border: 1px red solid">
+                <button @click="moveRight">右移</button><br/>
+                <button>左移</button>
+            </div>
+
+            <select multiple style="width: 300px; height: 400px;">
+                    <option v-for="game of right_games" v-bind:value="game">{{ game.name }}</option>
+            </select>
+            <hr/>
+            {{ selectedGames }}
+        </div>
+
+        <script>
+            new Vue({
+                el: '#app',
+                data: {
+                    games: [
+                        {name: '连连看', company: '腾讯'},
+                        {name: '开心消消乐', company: '百度'},
+                        {name: '俄罗斯方块', company: '阿里'},
+                        {name: '超级玛丽', company: '华为'},
+                        {name: '快乐推箱子', company: '前锋'},
+                        {name: '魂斗罗', company: '虾米'},
+                        {name: '冒险岛', company: '甲骨文'},
+                    ],
+                    selectedGames: [],
+
+                    right_games: [],
+                    right_selectedGames: []
+                },
+                methods: {
+                    moveRight() {
+                        for (let game of this.selectedGames) {
+                            let position = this.games.indexOf(game);
+                            if (position !== -1) {
+                                this.games.splice(position, 1);
+                            }
+                            this.right_games.push(game);
+                        }
+                        this.selectedGames = [];
+                    },
+                    moveLeft() {
+                        
+                    }
+                }
+            })
+        </script>
+    </body>
+</html>

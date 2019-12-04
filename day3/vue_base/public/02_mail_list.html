@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <script src="./lib/vue.js"></script>
+    </head>
+    <body>
+        <div id="app">
+            我的邮箱  {{ isAllChecked }}
+            <p>
+                <button v-on:click="deleteSelected">删除</button>
+                <button>标记为重要邮件</button>
+            </p>
+            <table border="1">
+                <thead>
+                    <tr>
+                        <th>
+                            选择
+                            <input v-on:change="checkItems" type="checkbox" v-bind:checked="isAllChecked" />
+                        </th>
+                        <th>标题</th>
+                        <th>日期</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr v-for="mail of mail_list" v-bind:style="{fontSize: (12 + mail.level * 2) + 'px'}">
+                        <td>
+                            <input type="checkbox" v-model="mails_selected"  v-bind:value="mail" />
+                        </td>
+                        <td>{{ mail.title }}</td>
+                        <td>{{ mail.sendDate }}</td>
+                    </tr>
+                </tbody>
+            </table>
+            {{ mails_selected }}
+        </div>
+
+        <script>
+            new Vue({
+                el: '#app',
+                data: {
+                    mail_list: [
+                        {id: '111', title: '华为offer通知', sendDate: '2019-12-1', level: 3},
+                        {id: '222', title: '百度offer通知', sendDate: '2019-12-2', level: 4},
+                        {id: '333', title: '腾讯offer通知', sendDate: '2019-12-2', level: 5},
+                        {id: '444', title: '房租欠费', sendDate: '2019-12-3', level: 0},
+                        {id: '555', title: '电话欠费', sendDate: '2019-12-3', level: 0},
+                        {id: '666', title: '信用卡账单', sendDate: '2019-12-3', level: 0},
+                    ],
+                    mails_selected: []
+                },
+                methods: {
+                    checkItems(event) {
+                        // event.target 表示 input 元素
+                        if (event.target.checked) {
+                            for (let mail of this.mail_list) {
+                                // 如果 数组里 没有 对应的选择项, 那么在添加, 避免 重复添加
+                                if (this.mails_selected.indexOf(mail) === -1) {
+                                    this.mails_selected.push(mail);
+                                }
+                            }
+                        } else {
+                            this.mails_selected = [];
+                        }
+                    },
+                    deleteSelected() {
+                        for (let mail of this.mails_selected) {
+                            let position = this.mail_list.indexOf(mail);
+                            if (position !== -1) {
+                                this.mail_list.splice(position, 1);
+                            }
+                        }
+                        this.mails_selected = [];
+                    }
+                },
+                computed: {
+                    isAllChecked() {
+                        return this.mail_list.length === this.mails_selected.length;
+                    }
+                }
+            })
+        </script>
+    </body>
+</html>
