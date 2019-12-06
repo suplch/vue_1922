@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <script src="./lib/vue.js"></script>
+    </head>
+    <body>
+        <div id="app">
+            <!-- Login 为我们自定义的 标签名, 也即是组件 -->
+            <Login title="登录框"></Login>
+
+            <Login title="Login Box"></Login>
+
+
+            <List v-bind:items="lessons"></List>
+
+            <Listex v-bind:items="lessons" field="level"></Listex>
+
+            <button v-on:click="addLesson" >添加课程</button>
+        </div>
+
+        <script>
+
+            // 全局定义一个 组件, 组件名称为 Login
+            Vue.component('Login', {
+                // 定义一个属性 叫做 title
+                props: ['title'],
+                // 自定义组件 的 data 数据模型必须定义为一个函数, 由函数返回一个对象来代表数据模型
+                data: function() {
+                    return {
+                        
+                    }
+                },
+                template: `
+                    <div style="border: solid 5px red"> 
+                        {{ title }} 
+                        <hr/>
+                        用户名: <input /><br/>
+                        密码: <input /><br/>
+                        <button>提交</button>
+                    </div>
+                `
+            })
+
+            /*
+            *  组件名称 List
+            *  属性 items 接受一个对象型数组, 要求里面的每一个对象都有 name 属性
+            *  组件的功能是 渲染 数组数据
+            */
+            Vue.component('List', {
+                props: ['items'],
+                template: `
+                    <ul style="border: solid 5px green">
+                        <li v-for="item of items">
+                            {{ item.name }}    
+                        </li>
+                    </ul>
+                `
+            })
+
+                        /*
+            *  组件名称 List
+            *  属性 items 接受一个对象型数组, 要求里面的每一个对象都有 name 属性
+            *  组件的功能是 渲染 数组数据
+            */
+            Vue.component('Listex', {
+                // 属性 items 接受一个对象型数组, showField 由使用者 来定义 输出的属性
+                props: ['items', 'field'],
+                template: `
+                    <ul style="border: solid 5px green">
+                        <li v-for="item of items">
+                            {{ item[field] }}    
+                        </li>
+                    </ul>
+                `
+            })
+
+
+            new Vue({
+                el: '#app',
+                data: {
+                    lessons: [
+                        {name: 'Java', level: 5}, 
+                        {name: 'php', level: 6},
+                        {name: 'Nodejs', level: 7},
+                    ]
+                },
+                methods: {
+                    addLesson() {
+                        let lessonName = window.prompt('请输入课程名称');
+
+                        this.lessons.push({
+                            name: lessonName
+                        })
+                    }
+                }
+            })
+        </script>
+    </body>
+</html>
