@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <script src="./lib/axios.min.js"></script>
+        <script src="./lib/vue.js"></script>
+    </head>
+    <body>
+        <div id="app">
+            <movie-list @remove="deleteMovie($event)" v-bind:movies="movies"></movie-list>
+        </div>
+
+        <script>
+
+            Vue.component('MovieItem', {
+                props: ["movie"],
+                template: `
+                    <div style="height: 100px; margin: 10px;box-shadow: red 0px 1px 5px;">
+                        {{movie.name}}, 公司: {{movie.company}}
+                        {{ movie.star }}
+                        <button v-on:click="deleteItem(movie)">删除</button>
+                    </div>
+                `,
+                methods: {
+                    deleteItem(movie) {
+                        this.$emit('delete', this.movie)
+                    }
+                }
+            });
+
+            Vue.component('MovieList', {
+                props: ['movies'],
+                template: `
+                    <div>
+                        电影列表
+                        <div>
+                            <movie-item 
+                                v-for="movie of movies" 
+                                v-bind:movie="movie" 
+                                v-on:delete="removeItem($event)"></movie-item>
+                        </div>
+                    </div>
+                `,
+                methods: {
+                    removeItem(event) {
+                        // let position = this.movies.indexOf(event);
+                        // this.movies.splice(position, 1);
+                        this.$emit('remove', event)
+                    }
+                }
+            })
+
+
+            new Vue({
+                el: '#app',
+                data: {
+                    movies: [
+                        {name: '冰雪奇缘', company: '迪士尼', star: '5'},
+                        {name: '黑客帝国', company: 'abc', star: '5'},
+                        {name: '终结者', company: '迪士尼', star: '3'},
+                        {name: '钢铁侠', company: '迪士尼', star: '5'},
+                        {name: '生化危机', company: '迪士尼', star: '2'},
+                        {name: '中国机长', company: '北京电影制片', star: '5'},
+                        {name: '攀登者', company: '迪士尼', star: '1'},
+                    ]
+                },
+                methods: {
+                    deleteMovie(event){
+                        let position = this.movies.indexOf(event);
+                        this.movies.splice(position, 1);
+                    }
+                }
+            })
+        </script>
+    </body>
+</html>

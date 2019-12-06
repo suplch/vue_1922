@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <script src="./lib/axios.min.js"></script>
+        <script src="./lib/vue.js"></script>
+        <style>
+            ul {
+                list-style: none;
+            }
+        </style>
+    </head>
+    <body>
+        <div id="app">
+            <boy></boy>
+            <hr/>
+            <girl></girl>
+        </div>
+
+        <script>
+            // events 通信, 解决 任意 组件之间的通信
+            const events = new Vue();
+
+            Vue.component('boy', {
+                template: `
+                    <div style="border: solid 5px blue; width: 400px; height: 200px">
+                        <input ref="msgBox" /> <button v-on:click="send">发送</button>
+                        <ul style="height: 100px; overflow: auto; border: solid 1px red">
+                            <li v-for="msg of msg_list" style="height: 30px">
+                                <div v-bind:style="{float: msg.sender === 'boy' ? 'right' : 'left'}" >
+                                    {{msg.sender === 'boy' ? '👦' : '👱‍♀️'}}  {{msg.msg}}
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                `,
+                data() {
+                    return {
+                        msg_list: []
+                    }
+                },
+                created() {
+                    // 监听 '女朋友说'
+                    events.$on('女朋友说', (msg) => {
+                        this.msg_list.push(msg);
+                    })
+                },
+                methods: {
+                    send() {
+                        let msg = this.$refs.msgBox.value;
+                        let msgObj = {
+                            msg: msg,
+                            sender: 'boy',
+                            sendTime: new Date()
+                        }
+                        this.msg_list.push(msgObj);
+                        // 广播一个事件 '男朋友说'
+                        events.$emit('男朋友说', msgObj)
+                        this.$refs.msgBox.value = '';
+                    }
+                }
+            
+            });
+
+            Vue.component('girl', {
+                template: `
+                    <div style="border: solid 5px pink; width: 400px; height: 200px">
+                            <input ref="msgBox" /> <button v-on:click="send">发送</button>
+                        <ul style="height: 100px; overflow: auto; border: solid 1px red">
+                                <li v-for="msg of msg_list" style="height: 30px">
+                                <div v-bind:style="{float: msg.sender === 'girl' ? 'right' : 'left'}" >
+                                    {{msg.sender === 'girl' ? '👱‍♀️' : '👦'}}{{msg.msg}}
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                `,
+                data () {
+                    return {
+                        msg_list: []
+                    }
+                },
+                // 组件的生命周期, 表示 当前组件被创建好了
+                created() {
+                    // 监听 '男朋友说'
+                    events.$on('男朋友说', (msg) => {
+                        this.msg_list.push(msg);
+                    })
+                },
+                methods: {
+                    send() {
+                        let msg = this.$refs.msgBox.value;
+                        let msgObj = {
+                            msg: msg,
+                            sender: 'girl',
+                            sendTime: new Date()
+                        }
+                        this.msg_list.push(msgObj);
+                        // 广播一个事件 '女朋友说'
+                        events.$emit('女朋友说', msgObj);
+                        this.$refs.msgBox.value = '';
+                    }
+                }
+            });
+
+            new Vue({
+                el: '#app',
+                data: {
+                    
+                },
+                methods: {
+                    
+                }
+            })
+        </script>
+    </body>
+</html>
