@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <script src="./lib/axios.min.js"></script>
+        <script src="./lib/vue.js"></script>
+    </head>
+    <body>
+        <div id="app">
+            <!-- Login 为我们自定义的 标签名, 也即是组件 -->
+            <!-- <Login v-on:dologin="startLogin"></Login> -->
+            <!-- ***** v-on:dologin **** -->
+            <Login v-on:dologin="startLogin($event)"></Login>
+
+            <Login 
+                title="Login Box" 
+                username="User Name" 
+                password="Password" 
+                submit="Submit"
+                v-on:dologin="loginAdmin($event)"></Login>
+
+        </div>
+
+        <script>
+
+            // 全局定义一个 组件, 组件名称为 Login
+            Vue.component('Login', {
+                // 定义一个属性 叫做 title
+                //props: ['title'],
+                // ***重要****
+                props: {
+                    title: {
+                        type: String,
+                        default: "登录框"
+                    },
+                    username: {
+                        type: String,
+                        default: '用户名'
+                    },
+                    password: {
+                        type: String,
+                        default: '口令'
+                    },
+                    submit: {
+                        type: String,
+                        default: '提交'
+                    }
+                },
+                // 自定义组件 的 data 数据模型必须定义为一个函数, 由函数返回一个对象来代表数据模型
+                data: function() {
+                    return {
+                        
+                    }
+                },
+                template: `
+                    <div style="border: solid 5px red"> 
+                        {{ title }} 
+                        <hr/>
+                        {{ username }}: <input ref="uname" type="text" /><br/>
+                        {{ password }}: <input ref="upwd" type="password" /><br/>
+                        <button @click="doLogin">{{ submit }}</button>
+                    </div>
+                `,
+                methods: {
+                    doLogin() {
+                        let username = this.$refs.uname.value;
+                        let password = this.$refs.upwd.value;
+                        // this.$emit 是一个方法 用来广播一个事件,
+                        // 通知 一件事发生了
+                        // this.$emit('eventName', eventObject)
+                        // ****事件通知****
+                        this.$emit('dologin', {
+                            username,
+                            password
+                        });
+                    }
+                }
+            })
+
+
+
+            new Vue({
+                el: '#app',
+                data: {
+                    
+                },
+                methods: {
+                    startLogin(event) {
+
+                        console.log(event);
+
+                        axios.post('/login', {
+                            username: event.username, 
+                            password: event.password
+                        }).then(function(result) {
+                            if (result.data.code === 0) {
+                                location.href = '/main.html'; 
+                            } else {
+                                alert('登录失败 错误码: ' + result.data.code)
+                            }
+                        })
+                    },
+                    loginAdmin(event){
+                        axios.post('/loginAdmin', {
+                            uname: event.username,
+                            upwd: event.password
+                        }).then(function(result) {
+                            if (result.data.code === 100) {
+                                location.href = '/admin.html'; 
+                            } else {
+                                alert('登录失败 错误码: ' + result.data.code)
+                            }
+                        })
+                    }
+                }
+            })
+        </script>
+    </body>
+</html>
