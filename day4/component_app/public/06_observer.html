@@ -1,0 +1,72 @@
+<html>
+    <head>
+
+    </head>
+    <body>
+        <script>
+            class Events {
+                constructor() {
+                    // this.callbackContainer 用来保存 某一个事件所对应的回调函数
+                    this.callbackContainer = {};
+                    // this.callbackContainer = {
+                    //     '我饿了': [
+                    //         function() {},
+                    //         function() {},
+                    //     ],
+                    //     '我渴了'': [
+                    //         function() {},
+                    //     ]
+                    // };
+                }
+                // 监听 某一个 eventName 所指示的事件
+                // 将回调函数 保存 到 eventName 所对应的 回调容器中 (callbackContainer)
+                $on(eventName, callback) {
+                    let callbackList =  this.callbackContainer[eventName];
+                    // 如果 回调 数组不存在, 那么创建一个
+                    if (!callbackList) {
+                        // 马上创建
+                        callbackList = [];
+                        // 放回 eventName 所对应的 callbackContainer 
+                        this.callbackContainer[eventName] = callbackList
+                    }
+                    // 将回调 函数 保存到 数组中
+                    callbackList.push(callback)
+                }
+                // 触发 eventName, 
+                $emit(eventName, data){
+                    // 通过 eventName 获取 callbackContainer 保存的对应回调函数数组
+                    let callbackList = this.callbackContainer[eventName];
+                    // 如果 回调函数数组 有效
+                    if (callbackList) {
+                        // 循环 一个一个的调用所有的回调
+                        for (let callback of callbackList) {
+                            // 将 emit 的 data 参数 也传递到 callback里
+                            callback(data);
+                        }
+                    }
+                }
+            }
+
+
+            let events = new Events();
+            events.$on('我饿了', function(data) {
+                console.log('吃点: ', data);
+            });
+
+            events.$on('我饿了', function(data) {
+                console.log('吃点: ', data);
+            });
+
+            events.$on('我渴了', function(data) {
+                console.log('喝点: ', data);
+            })
+
+            events.$emit('我饿了', "🍚")
+            events.$emit('我饿了', "🍗")
+
+            events.$emit('我渴了', '可口可乐')
+
+            
+        </script>
+    </body>
+</html>

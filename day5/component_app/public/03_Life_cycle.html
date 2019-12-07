@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <script src="./lib/axios.min.js"></script>
+        <script src="./lib/vue.js"></script>
+    </head>
+    <body>
+        <div id="app">
+            <div v-if="show">
+                <Box></Box>
+            </div>
+            
+
+            <button @click="show = !show">切换</button>
+        </div>
+
+        <script>
+
+            Vue.component('Box', {
+                template: `
+                    <div style="border: solid red 5px">
+                        <input ref="uname" />
+                        Box <button @click="count++"> {{ count }} </button>
+                        <div v-if="userInfo">
+                            {{ userInfo.name }}, {{ userInfo.age }}
+                        </div>
+                    </div>
+                `,
+                data() {
+                    return {
+                        count: 0,
+                        userInfo: undefined
+                    }
+                },
+                // 生命周期 钩子函数
+                // 实例创建前
+                beforeCreate() {
+                    console.log('组件即将被创建', this.count)
+                    console.log(this.$refs.uname)
+                },
+                // 创建完毕
+                created() {
+                    console.log('组件刚刚被创建', this.count);
+                    this.count = 100;
+                    console.log(this.$refs.uname)
+                    // 发起 ajax 数据请求
+                    axios.get('/userInfo').then((result) => {
+                        this.userInfo = result.data;
+                    });
+                },
+                // 挂载前
+                beforeMount() {
+                    console.log('组件马上要被挂载了')
+                    console.log(this.$refs.uname)
+                },
+                // 挂载完毕
+                mounted() {
+                    console.log('组件已经被挂载')
+                    console.log(this.$refs.uname)
+                },
+                // 更新前
+                beforeUpdate() {
+                    console.log('组件马上要被重新渲染')
+                    console.log(this.$refs.uname)
+                },
+                // 更新完毕
+                updated() {
+                    console.log('组件渲染完毕')
+                    console.log(this.$refs.uname)
+                },
+                // 销毁前
+                beforeDestroy() {
+                    console.log('组件马上被销毁')
+                    console.log(this.$refs.uname)
+                },
+                // 销毁完毕
+                destroyed() {
+                    console.log('组件已经被销毁')
+                    console.log(this.$refs.uname)
+                }
+            })
+
+            new Vue({
+                el: '#app',
+                data: {
+                    show: false
+                },
+                methods: {
+                    
+                }
+            })
+        </script>
+    </body>
+</html>

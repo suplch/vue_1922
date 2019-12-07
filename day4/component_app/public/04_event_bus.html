@@ -8,8 +8,8 @@
             let events = new Vue();
 
 
-            events.$on('我饿了', function() {
-                console.log('来点士力架');
+            events.$on('我饿了', function(fan) {
+                console.log('来点士力架', fan);
             });
 
             events.$on('我饿了', function() {
@@ -20,10 +20,7 @@
                 console.log('喝点可乐');
             })
 
-
-
-
-            events.$emit('我饿了')
+            events.$emit('我饿了', "🍚")
             events.$emit('我饿了')
 
             events.$emit('我渴了')

@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <script src="./lib/vue.js"></script>
+    </head>
+    <body>
+        <div id="app">
+            <!-- <keep-alive> -->
+                <component v-bind:is="boxName"></component>
+            <!-- </keep-alive> -->
+            
+
+            <button @click="switchComp">切换</button>
+        </div>
+
+        <script>
+
+            Vue.component('Box', {
+                template: `
+                    <div style="border: solid red 5px">
+                        <input ref="uname" />
+                        <button @click="show">显示</button>
+                    </div>
+                `,
+                methods: {
+                    show() {
+                        alert(this.$refs.uname.value);
+                    }
+                }
+            })
+
+            Vue.component('Boxhello', {
+                template: `
+                    <div style="border: solid green 5px">
+                        Hello
+                    </div>
+                `,
+                methods: {
+                    
+                }
+            })
+
+            new Vue({
+                el: '#app',
+                data: {
+                    boxName: 'Box'
+                },
+                methods: {
+                    switchComp() {
+                        if (this.boxName === 'Box') {
+                            this.boxName = 'Boxhello'
+                        } else {
+                            this.boxName = 'Box';
+                        }
+                    }
+                }
+            })
+        </script>
+    </body>
+</html>

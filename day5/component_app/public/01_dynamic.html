@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <script src="./lib/vue.js"></script>
+    </head>
+    <body>
+        <div id="app">
+            <component v-bind:is="boxName"></component>
+            <button @click="boxName = 'Box2'">改变</button>
+            <hr/>
+            <Box1></Box1>
+            <Box2></Box2>
+        </div>
+
+        <script>
+
+            Vue.component('Box1', {
+                template: `
+                    <div style="border: solid red 5px">box1</div>
+                `
+            })
+
+            Vue.component('Box2', {
+                template: `
+                    <div style="border: solid green 5px">box2</div>
+                `
+            })
+
+            new Vue({
+                el: '#app',
+                data: {
+                    boxName: 'Box1'
+                },
+                methods: {
+                    
+                }
+            })
+        </script>
+    </body>
+</html>

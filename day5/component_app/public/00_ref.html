@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <script src="./lib/vue.js"></script>
+    </head>
+    <body>
+        <div id="app">
+            <input ref="uname" />
+            <button @click="show">显示姓名</button>
+            <hr/>
+
+            <Box ref="box1"></Box>
+        </div>
+    
+        <script>
+
+            Vue.component('Box', {
+                template: `
+                    <div style="border: solid 5px red; width: 100px; height: 100px">
+                        Box1
+                    </div>
+                `,
+                data() {
+                    return {
+                        welcome: '欢迎光临'
+                    }
+                },
+                methods: {
+                    hello() {
+                        alert('my name is box1 ' + this.welcome)
+                    }
+                }
+            });
+
+            new Vue({
+                el: '#app',
+                data: {
+                    
+                },
+                methods: {
+                    show() {
+                        alert(this.$refs.uname.value);
+
+                        console.log(this.$refs.uname)
+                        console.log(this.$refs.box1)
+                        console.log(this.$refs.box1.welcome)
+                        this.$refs.box1.hello();
+                    }
+                }
+            })
+        </script>
+    </body>
+</html>
