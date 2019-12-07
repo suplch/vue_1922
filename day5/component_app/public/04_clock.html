@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <script src="./lib/axios.min.js"></script>
+        <script src="./lib/vue.js"></script>
+    </head>
+    <body>
+        <div id="app">
+            <div v-if="show">
+                <Clock></Clock>
+            </div>
+            
+            <button @click="show = !show">切换</button>
+        </div>
+
+        <script>
+
+            Vue.component('Clock', {
+                template: `
+                    <div style="border: solid red 5px">
+                        {{ time }}
+                    </div>
+                `,
+                data() {
+                    return {
+                        time: new Date().toLocaleString(),
+                        
+                    }
+                },
+                // 创建的是 申请了一下资源,
+                created() {
+                    this.__tid = setInterval(() => {
+                        axios.get('/nowtime').then((result) => {
+                            this.time = result.data.time;
+                            console.log(this.time);
+                        });
+
+                    }, 1000)
+                },
+                // 销毁的时候应该 释放资源
+                beforeDestroy() {
+                    clearInterval(this.__tid);
+                }
+                
+            })
+
+            new Vue({
+                el: '#app',
+                data: {
+                    show: false
+                },
+                methods: {
+                    
+                }
+            })
+        </script>
+    </body>
+</html>

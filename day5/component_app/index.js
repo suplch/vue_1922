@@ -53,6 +53,12 @@ app.get('/userInfo', function(request, response) {
     })
 })
 
+app.get('/nowtime', function(request, response) {
+    response.send({
+        time: new Date().toLocaleString()
+    })
+})
+
 const port = 5000;
 app.listen(port, function(err) {
     if (err) {

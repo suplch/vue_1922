@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <script src="./lib/axios.min.js"></script>
+        <script src="./lib/vue.js"></script>
+        <style>
+
+            ul li {
+                background: orange;
+                margin: 20px
+            }
+
+            .fade-enter-active {
+                position: absolute;
+                transition: all 1s; 
+            }
+            
+            .fade-leave-active {
+                position: absolute;
+                transition: all 1s
+            }
+
+            .fade-enter {
+                left: -100px;
+                opacity: 0
+            }
+
+            .fade-leave {
+                left: 0px;
+                opacity: 1
+            }
+
+            .fade-enter-to {
+                left: 0px;
+                opacity: 1
+            }
+
+            .fade-leave-to {
+                left: -100px;
+                opacity: 0
+            }
+
+
+            .move-enter-active {
+                position: absolute;
+                transition: all 2s; 
+            }
+
+            .move-leave-active {
+                position: absolute;
+                transition: all 2s;
+            }
+
+            .move-enter {
+                left: 300px;
+            }
+
+            .move-enter-to {
+                left: 0px;
+            }
+
+            .move-leave {
+                left: 0px;
+            }
+            .move-leave-to {
+                left: 300px;
+            }
+        </style>
+    </head>
+    <body>
+        <div id="app">
+            <button @click="show = !show">切换</button>
+            <transition name="fade">
+                <div v-if="show" style="border: solid 5px red; width: 100px; height: 100px">
+                    box
+                </div>
+            </transition>
+            <hr/>
+            <button @click="addLesson">添加课程</button>
+            
+
+            <transition-group v-on:enter="liEnter()" v-on:leave="liLeave()" name="move" tag="ul">
+                <li v-bind:key="lesson" v-for="lesson of lessons">
+                    {{lesson}} <button @click="remove(lesson)">删除</button>
+                </li>
+            </transition-group>
+
+
+        </div>
+        <script>
+
+
+            new Vue({
+                el: '#app',
+                data: {
+                    show: false,
+
+                    lessons: [
+                        'java', 'php', 'nodejs', 'html', 'css'
+                    ]
+                },
+                methods: {
+                    addLesson() {
+                        let lessonName = window.prompt('请输入课程');
+                        this.lessons.push(lessonName);
+                    },
+                    remove(lesson) {
+                        let position = this.lessons.indexOf(lesson);
+                        this.lessons.splice(position, 1);
+                    },
+                    liEnter() {
+                        console.log('enter')
+                    },
+                    liLeave() {
+                        console.log('leave')
+                    }
+                }
+            })
+        </script>
+    </body>
+</html>
