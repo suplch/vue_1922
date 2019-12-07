@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <link rel="stylesheet" href="./css/swiper.min.css">
+        <script src="./lib/swiper.min.js"></script>
+        <script src="./lib/axios.min.js"></script>
+        <script src="./lib/vue.js"></script>
+        <script src="./components/swiper_component.js"></script>
+        <style>
+   html, body {
+      position: relative;
+      height: 100%;
+    }
+    body {
+      background: #eee;
+      font-family: Helvetica Neue, Helvetica, Arial, sans-serif;
+      font-size: 14px;
+      color:#000;
+      margin: 0;
+      padding: 0;
+    }
+    .swiper-container {
+      width: 100%;
+      height: 100%;
+    }
+    .swiper-slide {
+      text-align: center;
+      font-size: 18px;
+      background: #fff;
+
+      /* Center slide text vertically */
+      display: -webkit-box;
+      display: -ms-flexbox;
+      display: -webkit-flex;
+      display: flex;
+      -webkit-box-pack: center;
+      -ms-flex-pack: center;
+      -webkit-justify-content: center;
+      justify-content: center;
+      -webkit-box-align: center;
+      -ms-flex-align: center;
+      -webkit-align-items: center;
+      align-items: center;
+    }
+        #app {
+            width: 100%;
+            height: 100%;
+        }
+        </style>
+    </head>
+    <body>
+        <div id="app">
+            
+            <Swiper v-bind:items="goods_list" idname="code">
+                <template v-for="goods of goods_list" v-slot:[goods.code]>
+                    {{ goods.pic }}
+                </template>
+            </Swiper>
+
+        </div>
+        <script>
+
+            new Vue({
+                el: '#app',
+                data: {
+                    goods_list: [
+                        {code: '111', name: '香蕉', pic: '🍌'},
+                        {code: '222', name: '西瓜', pic: '🍉'},
+                        {code: '333', name: '橙子', pic: '🍊'},
+                        {code: '444', name: '葡萄', pic: '🍇'},
+                        {code: '555', name: '菠萝', pic: '🍍'},
+                    ]
+                }
+            })
+        </script>
+    </body>
+</html>

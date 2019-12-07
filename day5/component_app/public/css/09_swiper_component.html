@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<!-- saved from url=(0046)http://localhost:5000/09_swiper_component.html -->
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <link rel="stylesheet" href="./09_swiper_component_files/swiper.min.css">
+        <script src="./09_swiper_component_files/swiper.min.js"></script>
+        <script src="./09_swiper_component_files/axios.min.js"></script>
+        <script src="./09_swiper_component_files/vue.js"></script>
+        <style>
+   html, body {
+      position: relative;
+      height: 100%;
+    }
+    body {
+      background: #eee;
+      font-family: Helvetica Neue, Helvetica, Arial, sans-serif;
+      font-size: 14px;
+      color:#000;
+      margin: 0;
+      padding: 0;
+    }
+    .swiper-container {
+      width: 100%;
+      height: 100%;
+    }
+    .swiper-slide {
+      text-align: center;
+      font-size: 18px;
+      background: #fff;
+
+      /* Center slide text vertically */
+      display: -webkit-box;
+      display: -ms-flexbox;
+      display: -webkit-flex;
+      display: flex;
+      -webkit-box-pack: center;
+      -ms-flex-pack: center;
+      -webkit-justify-content: center;
+      justify-content: center;
+      -webkit-box-align: center;
+      -ms-flex-align: center;
+      -webkit-align-items: center;
+      align-items: center;
+    }
+        </style>
+    <script type="text/javascript" src="chrome-extension://aadgmnobpdmgmigaicncghmmoeflnamj/ng-inspector.js"></script></head>
+    <body>
+        <div id="app"><div class="swiper-container swiper-container-initialized swiper-container-horizontal"><div class="swiper-wrapper"><div class="swiper-slide swiper-slide-active" style="width: 365px;">Slide 1</div> <div class="swiper-slide swiper-slide-next" style="width: 365px;">Slide 2</div> <div class="swiper-slide" style="width: 365px;">Slide 3</div> <div class="swiper-slide" style="width: 365px;">Slide 4</div> <div class="swiper-slide" style="width: 365px;">Slide 5</div> <div class="swiper-slide" style="width: 365px;">Slide 6</div> <div class="swiper-slide" style="width: 365px;">Slide 7</div> <div class="swiper-slide" style="width: 365px;">Slide 8</div> <div class="swiper-slide" style="width: 365px;">Slide 9</div> <div class="swiper-slide" style="width: 365px;">Slide 10</div></div> <div class="swiper-pagination swiper-pagination-bullets"><span class="swiper-pagination-bullet swiper-pagination-bullet-active"></span><span class="swiper-pagination-bullet"></span><span class="swiper-pagination-bullet"></span><span class="swiper-pagination-bullet"></span><span class="swiper-pagination-bullet"></span><span class="swiper-pagination-bullet"></span><span class="swiper-pagination-bullet"></span><span class="swiper-pagination-bullet"></span><span class="swiper-pagination-bullet"></span><span class="swiper-pagination-bullet"></span></div><span class="swiper-notification" aria-live="assertive" aria-atomic="true"></span></div></div>
+        <script>
+
+
+            new Vue({
+                el: '#app',
+                data: {
+                    
+                },
+                // 当组件被挂载后执行
+                mounted() {
+                    var swiper = new Swiper('.swiper-container', {
+                        pagination: {
+                            el: '.swiper-pagination',
+                        },
+                    });
+                },
+                methods: {
+                    
+                }
+            })
+        </script>
+    
+</body></html>
