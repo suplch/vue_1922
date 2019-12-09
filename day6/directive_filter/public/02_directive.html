@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <script src="./lib/vue.js"></script>
+    </head>
+    <body>
+        <div id="app">
+
+            <!-- <button v-on:keydown>button</button> -->
+
+            <input v-focus:hello.enter.leave.up.down />
+
+            <input v-focus-delay:3000.leave />
+        </div>
+
+        <script>
+
+            // Vue.directive('指令名称', 配置对象)
+            // 
+            Vue.directive('focus', {
+                inserted(el, binding) {
+                    el.focus();
+                    el.value = binding.arg
+                    console.log(binding)
+                }
+            });
+
+            Vue.directive('focus-delay', {
+                inserted(el, binding) {
+                    console.log(binding);
+                    setTimeout(function() {
+                        el.focus();
+                        el.style.background="red"
+                        if (binding.modifiers.leave) {
+                            setTimeout(function() {
+                                el.blur(); // 强制 失去焦点
+                                el.style.background="none"
+                            }, 1000);
+                        }
+                    }, Number(binding.arg));
+                    
+                }
+            });
+
+
+            
+            new Vue({
+                el: '#app',
+                data: {
+
+                }
+            })
+        </script>
+    </body>
+</html>

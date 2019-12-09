@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <script src="./lib/vue.js"></script>
+    </head>
+    <body>
+        <div id="app">
+
+            <!-- <button v-on:keydown>button</button> -->
+
+            <button v-auth:boss>审批</button>
+            <button v-auth:boss>删除</button>
+            <button v-auth:manager>发布</button>
+            <button v-auth:employee>申请</button>
+            <button v-auth:employee>查询</button>
+            
+        </div>
+
+        <script>
+            let role = 'boss';
+            // let role = 'manager';
+            //let role = 'boss';
+            // Vue.directive('指令名称', 配置对象)
+            // 
+            Vue.directive('auth', {
+                inserted(el, binding) {
+                    let level = {
+                        employee: 1,
+                        manager: 2,
+                        boss: 3
+                    }
+                    // 获取当前的用户的 级别
+                    let currentUserLevel = level[role];
+                    // 获取当前 button 按钮的 可以级别
+                    let buttonLevel = level[binding.arg];
+                    // 当前用户的身份 小于 按钮的身份 那 按钮不可见
+                    if (currentUserLevel < buttonLevel) {
+                        el.style.display = 'none'
+                    } 
+                }
+            });
+
+
+
+            
+            new Vue({
+                el: '#app',
+                data: {
+
+                }
+            })
+        </script>
+    </body>
+</html>

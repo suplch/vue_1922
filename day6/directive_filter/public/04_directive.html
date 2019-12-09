@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <script src="./lib/vue.js"></script>
+    </head>
+    <body>
+        <div id="app">
+            <button @click="count++">{{ count }}</button>
+            <button v-on:click="show = !show">button</button>
+
+            <input v-if="show" v-focus="3000"></input>
+            
+            <input v-focus="2000 + 3000"></input>
+
+            <input v-focus="delay"></input>
+
+            <div v-now></div>
+            <table border="1">
+                <tbody>
+                    <tr>
+                        <td v-now></td>
+                        <td v-now></td>
+                    </tr>
+                </tbody>
+            </table>
+            
+        </div>
+
+        <script>
+
+            // Vue.directive('指令名称', 配置对象)
+            // 
+            Vue.directive('focus', {
+                bind(el, binding) {
+                    console.log(binding)
+                    console.log('指令开始绑定')
+                },
+                inserted(el, binding) {
+                    console.log('指令被插入到父元素')
+                },
+                update() {
+                    console.log('所在的组件正在更新')
+                },
+                componentUpdated() {
+                    console.log('所在的组件已经更新完毕')
+                },
+                // 指令 解绑 钩子函数
+                unbind(el, binding) {
+                    console.log('指令被解绑')
+                }
+            });
+
+            Vue.directive('now', {
+                bind(el, binding) {
+                    this.__tid = setInterval(function() {
+                        el.innerHTML = new Date().toLocaleString();
+                    }, 1000)
+                },
+                inserted(el, binding) {
+                    console.log('指令被插入到父元素')
+                },
+                // 指令 解绑 钩子函数
+                unbind(el, binding) {
+                    clearInterval(this.__tid)
+                }
+            });
+
+
+
+            
+            new Vue({
+                el: '#app',
+                data: {
+                    count: 0,
+                    show: true,
+                    delay: 5000
+                }
+            })
+        </script>
+    </body>
+</html>

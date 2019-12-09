@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <script src="./lib/vue.js"></script>
+    </head>
+    <body>
+        <div id="app">
+            <input v-focus />
+
+            <input v-focus-delay />
+        </div>
+
+        <script>
+
+            // Vue.directive('指令名称', 配置对象)
+            // 
+            Vue.directive('focus', {
+                inserted(el) {
+                    el.focus();
+                }
+            });
+
+            Vue.directive('focus-delay', {
+                inserted(el) {
+                    setTimeout(function() {
+                        el.focus();
+                        el.style.border = 'solid 5px red'
+                    }, 3000);
+                    
+                }
+            });
+
+
+            
+            new Vue({
+                el: '#app',
+                data: {
+
+                }
+            })
+        </script>
+    </body>
+</html>

@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<!-- saved from url=(0039)http://localhost:5000/04_directive.html -->
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <script src="./04_directive_files/vue.js"></script>
+    <script type="text/javascript" src="chrome-extension://aadgmnobpdmgmigaicncghmmoeflnamj/ng-inspector.js"></script></head>
+    <body>
+        <div id="app"><button>0</button> <button>button</button> <input> <input> <input> <div>2019/12/9 上午10:16:52</div> <table border="1"><tbody><tr><td>2019/12/9 上午10:16:52</td> <td>2019/12/9 上午10:16:52</td></tr></tbody></table></div>
+
+        <script>
+
+            // Vue.directive('指令名称', 配置对象)
+            // 
+            Vue.directive('focus', {
+                bind(el, binding) {
+                    console.log(binding)
+                    console.log('指令开始绑定')
+                },
+                inserted(el, binding) {
+                    console.log('指令被插入到父元素')
+                },
+                update() {
+                    console.log('所在的组件正在更新')
+                },
+                componentUpdated() {
+                    console.log('所在的组件已经更新完毕')
+                },
+                // 指令 解绑 钩子函数
+                unbind(el, binding) {
+                    console.log('指令被解绑')
+                }
+            });
+
+            Vue.directive('now', {
+                bind(el, binding) {
+                    this.__tid = setInterval(function() {
+                        el.innerHTML = new Date().toLocaleString();
+                    }, 1000)
+                },
+                inserted(el, binding) {
+                    console.log('指令被插入到父元素')
+                },
+                // 指令 解绑 钩子函数
+                unbind(el, binding) {
+                    clearInterval(this.__tid)
+                }
+            });
+
+
+
+            
+            new Vue({
+                el: '#app',
+                data: {
+                    count: 0,
+                    show: true,
+                    delay: 5000
+                }
+            })
+        </script>
+    
+</body></html>

@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<!-- saved from url=(0039)http://localhost:5000/03_directive.html -->
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <script src="./03_directive_files/vue.js"></script>
+    <script type="text/javascript" src="chrome-extension://aadgmnobpdmgmigaicncghmmoeflnamj/ng-inspector.js"></script></head>
+    <body>
+        <div id="app"><button style="display: none;">审批</button> <button style="display: none;">删除</button> <button style="display: none;">发布</button> <button>申请</button> <button>查询</button></div>
+
+        <script>
+            let role = 'employee';
+            // let role = 'manager';
+            //let role = 'boss';
+            // Vue.directive('指令名称', 配置对象)
+            // 
+            Vue.directive('auth', {
+                inserted(el, binding) {
+                    let level = {
+                        employee: 1,
+                        manager: 2,
+                        boss: 3
+                    }
+
+                    if (level[role] < level[binding.arg]) {
+                        el.style.display = 'none'
+                    } 
+                }
+            });
+
+
+
+            
+            new Vue({
+                el: '#app',
+                data: {
+
+                }
+            })
+        </script>
+    
+</body></html>
