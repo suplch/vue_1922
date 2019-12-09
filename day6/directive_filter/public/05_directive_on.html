@@ -28,7 +28,7 @@
                 bind(el, binding) {
                     console.log(binding);
 
-                    function eventHandler(event) {
+                    this.eventHandler = function (event) {
                         // 判断 指令修饰符 如果 stop 为 true  那么主动调用 stopPropagation
                         if (binding.modifiers.stop) {
                             event.stopPropagation();
@@ -43,12 +43,12 @@
                             el.removeEventListener(binding.arg, eventHandler);
                         }
                     }
-                    el.addEventListener(binding.arg, eventHandler);
+                    el.addEventListener(binding.arg, this.eventHandler);
                 },
 
                 unbind(el, binding) {
                     // 当指令 卸载的时候, 移除对应 的事件
-                    el.removeEventListener(binding.arg, eventHandler);
+                    el.removeEventListener(binding.arg, this.eventHandler);
                 }
             });
 
