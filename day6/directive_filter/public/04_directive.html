@@ -23,7 +23,6 @@
                     </tr>
                 </tbody>
             </table>
-            
         </div>
 
         <script>
@@ -31,8 +30,9 @@
             // Vue.directive('指令名称', 配置对象)
             // 
             Vue.directive('focus', {
-                bind(el, binding) {
+                bind(el, binding, vNode) {
                     console.log(binding)
+                    console.log(vNode);
                     console.log('指令开始绑定')
                 },
                 inserted(el, binding) {
@@ -65,9 +65,6 @@
                 }
             });
 
-
-
-            
             new Vue({
                 el: '#app',
                 data: {

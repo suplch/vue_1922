@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <script src="./lib/vue.js"></script>
+    </head>
+    <body>
+        <div id="app">
+            {{ welcome | cap }}<br/>
+            {{ welcome | upper }}<br/>
+            <!-- 直接调用 过滤器串联 , 可以连续 使用 |  -->
+            {{ welcome | lower | cap }}<br/>
+            {{ welcome | lower }}<br/>
+            <!-- 过滤器 也可以传递一下参数 -->
+            {{ 100 | money(5, '$') }}<br/>
+            {{ 100 | money(5, '¥') }}
+            <hr/>
+            <input v-model="welcome" />
+            <hr/>
+            <ul>
+                <li v-for="hobby of filterArr">
+                    {{hobby}}
+                </li>
+            </ul>
+        </div>
+
+        <script>
+
+            Vue.filter('cap', function(value) {
+                if (!value) return '';
+                value = value.toString();
+                return value.charAt(0).toUpperCase() + value.slice(1);
+            })
+
+            Vue.filter('upper', function(value) {
+                return value.toUpperCase();
+            })
+
+            Vue.filter('lower', function(value) {
+                return value.toLowerCase();
+            })
+
+            Vue.filter('money', function(value, arg1, arg2) {
+                return arg2 + ' ' + value.toFixed(arg1);
+            })
+
+            Vue.filter('filterArr', function(value) {
+                return value;
+            })
+            
+            new Vue({
+                el: '#app',
+                data: {
+                    welcome: 'hello world',
+                    hobbies: [
+                        'Java', 'HTML', 'css', "JavaScript"
+                    ]
+                },
+                computed: {
+                    filterArr() {
+                        let result = [];
+                        for (let hobby of this.hobbies) {
+                            if (hobby.length >= 4) {
+                                result.push(hobby)
+                            }
+                        }
+                        return result;
+                    }
+                },
+                methods: {
+                    
+                }
+            })
+        </script>
+    </body>
+</html>

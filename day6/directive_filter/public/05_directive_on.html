@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <script src="./lib/vue.js"></script>
+    </head>
+    <body onclick="alert('body 被点击了')">
+        <div id="app">
+            <button v-on:click="visible = !visible">切换</button>
+            <div v-if="visible">
+                    <button v-on:click="show()">点击我</button>
+                    <button v-on:click.once="show()">点击我 2</button>
+                    <button v-on:dblclick="show()">点击我 3</button>
+                    <button v-on:click.stop="show()">点击我 4</button>
+                    <button v-on:click.prevent="show()">点击我 5</button>
+                    <hr/>
+        
+                    <button v-监听:click="show">点击我 自定义事件</button>
+                    <button v-监听:click.once="show">点击我 2 自定义事件</button>
+                    <button v-监听:dblclick="show">点击我 3 自定义事件</button>
+                    <button v-监听:click.stop="show">点击我 4 自定义事件</button>
+                    <a href="https://www.baidu.com" v-监听:click.stop.prevent.once="show">去百度</a>
+            </div>
+        </div>
+
+        <script>
+
+            Vue.directive('监听', {
+                bind(el, binding) {
+                    console.log(binding);
+
+                    function eventHandler(event) {
+                        // 判断 指令修饰符 如果 stop 为 true  那么主动调用 stopPropagation
+                        if (binding.modifiers.stop) {
+                            event.stopPropagation();
+                        }
+                        // 判断 指令修饰符 如果 prevent 为 true  那么主动调用 preventDefault
+                        if (binding.modifiers.prevent) {
+                            event.preventDefault();
+                        }
+                        binding.value();
+                        // 判断 指令修饰符 如果 once 为 true  一旦事件回调函数被执行, 那么马上移除事件
+                        if (binding.modifiers.once) {
+                            el.removeEventListener(binding.arg, eventHandler);
+                        }
+                    }
+                    el.addEventListener(binding.arg, eventHandler);
+                },
+
+                unbind(el, binding) {
+                    // 当指令 卸载的时候, 移除对应 的事件
+                    el.removeEventListener(binding.arg, eventHandler);
+                }
+            });
+
+            new Vue({
+                el: '#app',
+                data: {
+                    visible: true
+                },
+                methods: {
+                    show() {
+                        alert('hello');
+                    }
+                }
+            })
+        </script>
+    </body>
+</html>
