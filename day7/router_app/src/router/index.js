@@ -29,6 +29,11 @@ const routes = [
     path: '/center',
     name: 'center',
     component: () => import('../views/Center.vue') // 异步加载组件
+  },
+  {
+    path: '/detail/:pid',
+    name: 'detail',
+    component: () => import('../views/GoodsDetail.vue')
   }
 ]
 
