@@ -7,7 +7,7 @@ Vue.use(VueRouter)
 const routes = [
   {
     path: '/index',
-    redirect: {name: 'home'}
+    redirect: {name: 'home'} // 重定向, 当用户访问 /index 将其 重新指向 home 组件
   },
   {
     path: '/',
@@ -16,7 +16,7 @@ const routes = [
   {
     path: '/home',
     name: 'home',
-    alias: '/house',
+    alias: '/house', // 定义 别名, 当用户 访问别名 /house 是 相当于 访问 /home
     component: Home
   },
   {
