@@ -6,8 +6,17 @@ Vue.use(VueRouter)
 
 const routes = [
   {
+    path: '/index',
+    redirect: {name: 'home'}
+  },
+  {
     path: '/',
+    redirect: '/home'
+  },
+  {
+    path: '/home',
     name: 'home',
+    alias: '/house',
     component: Home
   },
   {
@@ -23,7 +32,22 @@ const routes = [
         name: 'contact',
         component: () => import('../views/Contact.vue')
       }
-    ]
+    ],
+    beforeEnter(to, from , next) {
+      console.log(to);
+      console.log(from);
+      console.log(next);
+
+      let password = window.prompt('请输入口令');
+
+      if (password === '123') {
+        next();
+      }
+
+      // setTimeout(function() {
+      //   next();
+      // }, 3000);
+    }
   },
   {
     path: '/content',
@@ -43,9 +67,18 @@ const routes = [
 ]
 
 const router = new VueRouter({
-  mode: 'history',
+  //mode: 'history',
+  mode: 'hash',
   base: process.env.BASE_URL,
   routes
 })
+
+router.beforeEach(function(to, from , next) {
+  console.log('全局守卫监控')
+  console.log(to)
+  console.log(from)
+  
+  next();
+});
 
 export default router
