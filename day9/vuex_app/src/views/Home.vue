@@ -17,6 +17,7 @@ export default {
     inc() {
       // this.$store.state.count++
       // this.$store.commit('inc');
+      // 分发 一个 动作 action , 携带参数 1
       this.$store.dispatch('inc', 1);
     },
     dec() {

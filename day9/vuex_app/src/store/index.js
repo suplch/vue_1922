@@ -18,6 +18,7 @@ export default new Vuex.Store({
       state.count -= payload;
     }
   },
+  // 动作
   actions: {
     inc(context, payload) { // payload 负载数据
       console.log(context)
