@@ -29,13 +29,17 @@ export default {
       return this.$store.state.cart.items;
     },
     total() {
-        let items = this.$store.state.cart.selectedItems;
-        let total = 0;
-        for (let item of items) {
-            total += item.price * item.count;
-        }
-        return total;
+      // 直接调用 store 里面的计算 属性
+      return this.$store.getters.cartTotal;
     },
+    // total() {
+    //     let items = this.$store.state.cart.selectedItems;
+    //     let total = 0;
+    //     for (let item of items) {
+    //         total += item.price * item.count;
+    //     }
+    //     return total;
+    // },
     selected_items: {
         // 当读取访问 selected_items 时, 那么 调用 get 方法
         get() {
