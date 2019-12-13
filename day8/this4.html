@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+    <head>
+
+    </head>
+    <body>
+        <script>
+            window.name = '王'
+            let p1 = {
+                name: 'zhang',
+                age: 18,
+
+                eat() {
+                    console.log(this.name)
+                }
+            }
+
+            let p2 = {
+                name: 'li'
+            }
+
+            p2.eat = p1.eat;
+
+            p1.eat();
+            p2.eat();
+
+            let eat = p1.eat;
+            eat();
+
+            
+
+
+        </script>
+    </body>
+</html>

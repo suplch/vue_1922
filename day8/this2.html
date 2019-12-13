@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+    <head>
+
+    </head>
+    <body>
+        <script>
+            
+            class Person {
+                constructor(name, age) {
+                    this.name = name;
+                    this.age = age;
+                }
+
+                smoke() {
+                    console.log(this.name + ' 正在抽烟');
+                }
+
+                drink() {
+                    console.log(this.name + ' 喝酒')
+                }
+
+                hair() {
+                    console.log(this.name + ' 烫头')
+                }
+
+                doHobby() {
+                    this.smoke();
+                    this.drink();
+                    this.hair();
+                }
+            }
+            
+
+            let yulaoshi = new Person('于老师', 18);
+            console.log(yulaoshi)
+            yulaoshi.doHobby();
+
+            let guolaoshi = new Person('郭老师', 18);
+            console.log(guolaoshi)
+            guolaoshi.doHobby();
+
+        </script>
+    </body>
+</html>

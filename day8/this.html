@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+    <head>
+
+    </head>
+    <body>
+        <script>
+            
+            // console.log(this) 代表 window 对象
+
+            let yulaoshi = {
+                name: '于老师',
+                age: 18,
+                smoke() {
+                    console.log(this.name + ' 正在抽烟');
+                },
+                drink() {
+                    console.log(this.name + ' 喝酒')
+                },
+                hair() {
+                    console.log(this.name + ' 烫头')
+                },
+
+                doHobby() {
+                    this.smoke();
+                    this.drink();
+                    this.hair();
+                }
+            }
+
+            console.log(yulaoshi.name);
+            console.log(yulaoshi.age);
+
+            yulaoshi.name = '谦哥'
+            yulaoshi.smoke();
+            yulaoshi.doHobby();
+            
+
+        </script>
+    </body>
+</html>

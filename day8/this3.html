@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+    <head>
+
+    </head>
+    <body>
+        <script>
+            
+            class Person {
+                constructor(name, age) {
+                    this.name = name;
+                    this.age = age;
+                }
+
+                smoke() {
+                    console.log(this.name + ' 正在抽烟');
+                }
+
+                drink() {
+                    console.log(this.name + ' 喝酒')
+                }
+
+                hair() {
+                    console.log(this.name + ' 烫头')
+                }
+            }
+            
+            function doHobby(time, place) {
+                console.log(arguments)
+                console.log(`${this.name} 在 ${time} ${place}`)
+                this.smoke();
+                this.drink();
+                this.hair();
+            }
+
+            let yulaoshi = new Person('于老师', 18);
+
+            let doHobbyOfYulaoshi = doHobby.bind(yulaoshi);
+            doHobbyOfYulaoshi();
+
+            //doHobby.apply(yulaoshi, ['2019', '天津']);
+            //doHobby.call(yulaoshi, '2018', '北京', '中国');
+
+            // yulaoshi.doHobby = doHobby;
+            // yulaoshi.doHobby();
+
+
+            //doHobby()
+            // 等效于
+            //window.doHobby()
+
+            
+
+        </script>
+    </body>
+</html>
