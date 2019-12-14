@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+<head>
+</head>
+<body>
+    Es 6
+    <script>
+        // es5 class extends 关键字 其实是  语法糖, 本质还是 prototype
+        class Creature {
+            constructor(life) {
+                this.life = life;
+            }
+
+            move() {
+                console.log(`这个 生物 真在移动, 它能活 ${this.life} 秒`)
+            }
+        }
+
+
+        class Animal extends Creature {
+            constructor(life) {
+                super(life);
+                this.feature = '胎生';
+            }
+
+            eat() {
+                console.log(`这个 动物 正在吃`)
+            }
+        }
+
+        class Cat extends Animal {
+            constructor(life) {
+                super(life)
+                this.miao = '喵喵'
+            }
+
+            climbTree() {
+                console.log(`猫可以上树`)
+            }
+        }
+
+
+        let c1 = new Creature(2);
+        c1.move();
+
+        let ani = new Animal(20);;
+        ani.move();
+        ani.eat();
+
+        let cat = new Cat(30);
+        cat.move();
+        cat.eat();
+        cat.climbTree();
+
+
+        
+    </script>
+</body>
+</html>
