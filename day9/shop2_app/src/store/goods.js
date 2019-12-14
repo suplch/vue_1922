@@ -1,4 +1,4 @@
-import axios from 'axios';
+
 export default {
     namespaced: true,
     state: {
@@ -12,10 +12,11 @@ export default {
     },
     actions:{
         list(context) {
+            console.log(this)
             console.log('goods_ get list')
         },
         get_goods_list(context) {
-            return axios.get('/goods/list').then(function(result) {
+            return this.$http.get('/goods/list').then(function(result) {
                 if (result.data.code === 10000) {
                     let goods_list = result.data.data;
                     context.commit('set_goods_list', goods_list);
@@ -31,7 +32,7 @@ export default {
         async get_goods_list_v2(context) {
             let result;
             try {
-                result = await axios.get('/goods/list');
+                result = await this.$http.get('/goods/list');
             } catch (err) {
                 alert(err.message);
                 return;

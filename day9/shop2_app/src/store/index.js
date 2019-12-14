@@ -1,10 +1,13 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
+import axios from 'axios';
 
 Vue.use(Vuex)
 
 import goods from './goods';
 import carts from './carts';
+
+Vuex.Store.prototype.$http = axios;
 
 export default new Vuex.Store({
   state: {

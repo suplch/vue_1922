@@ -31,6 +31,35 @@ app.get('/goods/list', function(request, response) {
     // }) 
 });
 
+app.get('/lang/newlangs', function(request, response) {
+
+    setTimeout(function() {
+        response.send([
+            'rust', 'erlang', 'D'
+        ]);
+    }, 1000);
+});
+
+app.get('/lang/more', function(request, response) {
+
+    setTimeout(function() {
+        response.send([
+            'english', 'french', 'chinese'
+        ]);
+    }, 1000);
+});
+
+app.get('/lang/list', function(request, response) {
+
+    setTimeout(function() {
+        response.send([
+            'java', 'c++', 'ruby', 'python', 
+            'julia', 'scale', 'go', 'php', 'c#', 'basic'
+        ])
+    }, 1000)
+
+})
+
 
 const port = 5000;
 app.listen(port, function(err) {
