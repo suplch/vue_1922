@@ -1,21 +1,15 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
+import axios from 'axios';
 
 Vue.use(Vuex)
 
 export default new Vuex.Store({
   state: {
     count: 10,
-    goods_list: [
-      {id: '111', name: '电脑', price: 10000, pic: '💻'},
-      {id: '222', name: '键盘', price: 200, pic: '⌨️'},
-      {id: '333', name: '鼠标', price: 99, pic: '🖱'},
-    ],
+    goods_list: [],
     cart: {
-      items: [
-        {id: '111', name: '电脑', price: 10000, pic: '💻', count: 1},
-        {id: '222', name: '键盘', price: 200, pic: '⌨️', count: 2},
-      ],
+      items: [],
       selectedItems: []
     }
   },
@@ -49,11 +43,44 @@ export default new Vuex.Store({
           count: 1
         });
       }
+    },
+    set_goods_list(state, goods_list) {
+      state.goods_list = goods_list;
     }
   },
   actions: {
     add_to_cart({commit}, goods) {
       commit('add_to_cart', goods);
+    },
+    // ******  注意点 注意点 注意点  dispatch 返回 promise 这样可以处理 异步操作
+    get_goods_list(context) {
+      return axios.get('/goods/list').then(function(result) {
+          if (result.data.code === 10000) {
+            let goods_list = result.data.data;
+            context.commit('set_goods_list', goods_list);
+          } else {
+            alert(`${result.data.msg}: (${result.data.code})`);
+          }
+      }).catch(function(err) {
+        alert(err.message);
+      });
+    },
+    // ******  注意点 注意点 注意点  dispatch 返回 promise 这样可以处理 异步操作
+    // 使用 es6 async await 简化异步操作
+    async get_goods_list_v2(context) {
+      let result;
+      try {
+        result = await axios.get('/goods/list');
+      } catch (err) {
+        alert(err.message);
+        return;
+      }
+      if (result.data.code === 10000) {
+        let goods_list = result.data.data;
+        context.commit('set_goods_list', goods_list);
+      } else {
+        alert(`${result.data.msg}: (${result.data.code})`);
+      }
     }
   },
   modules: {

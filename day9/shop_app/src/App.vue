@@ -10,6 +10,11 @@
 </template>
 <script>
 export default {
+  methods: {
+    getData() {
+      // this.$http.get('/xxxx/yyy')
+    }
+  },
   computed: {
     items_count() {
       let items = this.$store.state.cart.items;
