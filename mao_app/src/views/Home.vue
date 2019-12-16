@@ -9,13 +9,8 @@
           {{ tab.text }}
         </div>
       </div>
-      <div class="movielist">
-        <div v-for="movie of movie_list">
-          {{ movie.nm }}, {{ movie.star }}, {{ movie.rt }}
-        </div>
-      </div>
     </div>
-    
+    <component v-bind:is="selectedTab.comp"></component>
   </div>
 </template>
 
@@ -35,27 +30,30 @@
 // wish: 12226
 // wishst: 0
 import { mapState, mapActions } from 'vuex'
+import Online from '../components/Online';
+import Coming from '../components/Coming';
 export default {
   name: 'home',
+  data() {
+    return {
+
+    }
+  },
   computed: {
     ...mapState('movie', [
       'tabs',
-      'selectedTab',
-      'movie_list'
+      'selectedTab'
     ])
-  },
-  created() {
-    this.movieOnInfoList();
   },
   methods: {
     ...mapActions('movie', {
       selectTab(dispatch, tab) {
         dispatch('selectTab', tab);
-      },
-      movieOnInfoList(dispatch) {
-        dispatch('movieOnInfoList');
       }
     }),
+  },
+  components: {
+    Online, Coming
   }
 }
 </script>
@@ -85,19 +83,5 @@ export default {
   .tab > div.selected {
     color: red;
     border-bottom: solid 2px red;
-  }
-
-  .movielist {
-    position: absolute;
-    top: 95px;
-    left: 0px;
-    right: 0px;
-    bottom: 50px;
-    overflow: auto;
-  }
-
-  .movielist > div {
-    height: 114px;
-    box-shadow: 0px 0px 5px red;
   }
 </style>

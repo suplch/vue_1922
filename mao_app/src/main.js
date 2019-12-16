@@ -8,6 +8,10 @@ Vue.config.productionTip = false
 
 Vue.prototype.$http = axios;
 
+Vue.filter('imgSize', function(value, size) {
+  return value.replace('w.h', size)
+});
+
 new Vue({
   router,
   store,
