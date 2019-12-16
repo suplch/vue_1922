@@ -1,5 +1,9 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
+import axios from 'axios';
+
+import movie from './movie';
+import cinema from './cinema';
 
 Vue.use(Vuex)
 
@@ -8,6 +12,8 @@ const navs = [
   {name: 'yy', text: '影院', header: '影院', path: '/cinema'},
   {name: 'wd', text: '我的', header: ''},
 ];
+
+Vuex.Store.prototype.$http = axios;
 
 export default new Vuex.Store({
   state: {
@@ -25,5 +31,7 @@ export default new Vuex.Store({
     }
   },
   modules: {
+    movie,
+    cinema
   }
 })

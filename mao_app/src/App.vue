@@ -48,6 +48,9 @@ export default {
 }
 
 header {
+  position: fixed;
+  top: 0px;
+  width: 100%;
   height: 50px;
   background: #e54847;
   color: white;
@@ -56,7 +59,8 @@ header {
 }
 
 nav {
-  position: absolute;
+  position: fixed;
+  background: white;
   bottom: 0px;
   width: 100%;
   height: 49px;
