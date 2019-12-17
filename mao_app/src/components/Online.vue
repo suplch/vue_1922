@@ -1,6 +1,6 @@
 <template>
     <div class="movielist">
-        <div v-for="movie of movie_list">
+        <div v-bind:key="movie.id" v-for="movie of movie_list">
             <div class="avatar">
             <img v-bind:src="movie.img | imgSize('64.90')" />
             </div>
@@ -13,7 +13,7 @@
             </div>
             </div>
             <div class="btn">
-                <button>购票</button>
+                <button @click="gotoMovie(movie)">购票</button>
             </div>
         </div>
     </div>
@@ -36,6 +36,9 @@ export default {
                 dispatch('movieOnInfoList');
             }
         }),
+        gotoMovie(movie){
+          this.$router.push('/movie/' + movie.id);
+        }
     }
 }
 </script>

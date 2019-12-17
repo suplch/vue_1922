@@ -10,7 +10,8 @@ export default {
         tabs: tabs,
         movie_list: [],
         movie_expected_list: [],   // 我们所期待的电影列表
-        coming_list: []
+        coming_list: [],
+        detailMovie: undefined
     },
     mutations: {
         selectTab(state, tab) {
@@ -24,6 +25,9 @@ export default {
         },
         set_coming_list(state, coming) {
             state.coming_list = coming;
+        },
+        setMovieDetail(state, movieDetail) {
+            state.detailMovie = movieDetail
         }
     },
     actions: {
@@ -68,6 +72,17 @@ export default {
                 }
             });
             context.commit('set_coming_list', result.data.coming);
+        },
+        async getMovieDetail(context, movieId) {
+            const result = await this.$http.get('/ajax/detailmovie', {
+                params: {
+                    movieId: movieId,
+                    optimus_uuid: '844E1B501FE311EA961CD36275BB4F817590FE81DB08466697EE7AE1D57CC0D7',
+                    optimus_risk_level: 71,
+                    optimus_code: 10
+                }
+            });
+            context.commit('setMovieDetail', result.data.detailMovie)
         }
     }
 }
